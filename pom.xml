@@ -29,6 +29,44 @@
             <artifactId>spark-template-velocity</artifactId>
             <version>2.3</version>
         </dependency>
+		<!-- junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	    <!-- swagger -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-core</artifactId>
+			<version>1.5.10</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.swagger/swagger-parser -->
+		<dependency>
+		    <groupId>io.swagger</groupId>
+		    <artifactId>swagger-parser</artifactId>
+		    <version>1.0.23</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.swagger/swagger-jaxrs -->
+		<dependency>
+		    <groupId>io.swagger</groupId>
+		    <artifactId>swagger-jaxrs</artifactId>
+		    <version>1.5.10</version>
+		</dependency>
+		<!-- jax rs annotations -->
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars/swagger-ui -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>swagger-ui</artifactId>
+		    <version>2.2.6</version>
+		</dependency>
+		
   </dependencies>
   
   <build>
