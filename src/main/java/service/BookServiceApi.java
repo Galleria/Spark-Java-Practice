@@ -1,5 +1,4 @@
 package service;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -13,8 +12,16 @@ public class BookServiceApi {
 	private static List<Book> Books;
 	private static Gson gson = new Gson();
 	
-	static{
+	public BookServiceApi(){
 		
+	}
+	
+	public BookServiceApi(List<Book> Books){
+		BookServiceApi.Books = Books;
+	}
+	
+	static{
+		/*
 		Boolean inStock = true;
 		Boolean notInStock = false;
 		
@@ -22,6 +29,7 @@ public class BookServiceApi {
 		Books.add( new Book( "1" , "Happy New Year" , "For Fun" , inStock ) ) ;
 		Books.add( new Book( "2" , "Zombie" , "Terror" , notInStock ) );
 		Books.add( new Book( "3" , "Harry Potter" , "Fantacy" , inStock ) );
+		*/
 	}
 	
 	public static List<Book> getAllBooks(){
@@ -38,7 +46,6 @@ public class BookServiceApi {
 	}
 	
 	public static List<Book> getBookByStatus(Boolean status){
-		System.out.println( status );
 		try{
 			return Books.stream().filter( b -> b.getStatus().equals(status) ).collect( Collectors.toList() );
 		}
