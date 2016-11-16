@@ -1,46 +1,71 @@
 package controller;
 
-import service.BookServiceApi;
+import java.util.List;
+
+import com.google.gson.Gson;
+
+import model.Book;
+import service.BookApiService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 
 public class BookController {
+	
+	private BookApiService bookApiService;
+	private Gson gson = new Gson();
+	
+	public BookController(){
+		bookApiService = new BookApiService();
+	}
+	
+	public BookController(List<Book> books){
+		bookApiService = new BookApiService(books);
+	}
 
-	public static Route getAllBooks = (Request req,Response res) -> {
-		return BookServiceApi.getAllBooks();
+	public Route getAllBooks = (Request req,Response res) -> {
+		return bookApiService.getAllBooks();
 	};
 	
-	public static Route getBookById = (Request req,Response res) -> {
+	public Route getBookById = (Request req,Response res) -> {
 		String id = req.params(":id");
-		return BookServiceApi.getBookById( id );
+		return bookApiService.getBookById( id );
 	};
 	
-	public static Route getBookByStatus = (Request req,Response res) -> {
+	public Route getBookByStatus = (Request req,Response res) -> {
 		Boolean status = Boolean.parseBoolean( req.params(":status") );
-		return BookServiceApi.getBookByStatus( status );
+		System.out.println( req.params(":status") );
+		return bookApiService.getBookByStatus( status );
 	};
 	
-	public static Route addBook = (Request req,Response res) -> {
+	public Route addBook = (Request req,Response res) -> {
 		String json = req.body();
-		return BookServiceApi.addBook( json );
+		Book book = gson.fromJson(json, Book.class);
+		return bookApiService.addBook( book );
 	};
 	
-	public static Route updateBookById = (Request req,Response res) -> {
+	public Route updateBookById = (Request req,Response res) -> {
 		String id = req.params(":id");
 		String json = req.body();
-		return BookServiceApi.updateBookById( id , json );
+		Book book = gson.fromJson(json, Book.class);
+		return bookApiService.updateBookById( id , book );
 	};
 	
-	public static Route updateBookStatusById = (Request req,Response res) -> {
+	public Route updateBookStatusById = (Request req,Response res) -> {
 		String id = req.params(":id");
 		Boolean status = Boolean.parseBoolean( req.params(":status") );
-		return BookServiceApi.updateBookStatusById( id , status );
+		return bookApiService.updateBookStatusById( id , status );
 	};
 	
-	public static Route deleteBookById = (Request req,Response res) -> {
+	public Route deleteBookById = (Request req,Response res) -> {
 		String id = req.params(":id");
-		return BookServiceApi.deleteBookById( id ) ? "success" : "failed";
+		boolean success = bookApiService.deleteBookById( id );
+		if( !success ){
+			res.header("404", "Book not found");
+		}else{
+			res.header("200", "Success");
+		}
+		return success ? "success" : "failed";
 	};
 }

@@ -14,7 +14,7 @@ import model.Book;
 @RunWith(MockitoJUnitRunner.class)
 public class BookServiceApiTest {
 	
-	BookServiceApi bookServiceApi;
+	BookApiService bookServiceApi = new BookApiService();
 	
 	List<Book> Books = new ArrayList<>();
 	
@@ -26,37 +26,37 @@ public class BookServiceApiTest {
 		Books.add( new Book( "1" , "Happy New Year" , "For Fun" , inStock ) ) ;
 		Books.add( new Book( "2" , "Zombie" , "Terror" , notInStock ) );
 		Books.add( new Book( "3" , "Harry Potter" , "Fantacy" , inStock ) );
-		bookServiceApi = new BookServiceApi( Books );
+		bookServiceApi = new BookApiService( Books );
 	}
 	
 	@Test
 	public void getAllBooks_It_Should_Be_Return_3_Books(){
-		Assert.assertEquals( 3 , BookServiceApi.getAllBooks().size() );
+		Assert.assertEquals( 3 , bookServiceApi.getAllBooks().size() );
 	}
 	
 	@Test
 	public void getBookById_It_Should_Be_Return_1_Book(){
-		Assert.assertEquals( Books.get(0) , BookServiceApi.getBookById("1") );
+		Assert.assertEquals( Books.get(0) , bookServiceApi.getBookById("1") );
 	}
 	
 	@Test
 	public void getBookById_It_Should_Be_Return_0_Book(){
-		Assert.assertNotEquals( Books.get(0) , BookServiceApi.getBookById("2") );
+		Assert.assertNotEquals( Books.get(0) , bookServiceApi.getBookById("2") );
 	}
 	
 	@Test
 	public void getBookById_It_Should_Be_Return_Empty(){
-		Assert.assertNull( BookServiceApi.getBookById("99") );
+		Assert.assertNull( bookServiceApi.getBookById("99") );
 	}
 	
 	@Test
 	public void getBookByStatus_It_Should_Be_Return_1_Books_OutStock(){
-		Assert.assertEquals( 1 , BookServiceApi.getBookByStatus( notInStock ).size() );
+		Assert.assertEquals( 1 , bookServiceApi.getBookByStatus( notInStock ).size() );
 	}
 	
 	@Test
 	public void getBookByStatus_It_Should_Be_Return_2_Books_InStock(){
-		Assert.assertEquals( 2 , BookServiceApi.getBookByStatus( inStock ).size() );
+		Assert.assertEquals( 2 , bookServiceApi.getBookByStatus( inStock ).size() );
 	}
 	
 	

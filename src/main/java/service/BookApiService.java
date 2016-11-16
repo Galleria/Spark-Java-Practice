@@ -7,17 +7,17 @@ import com.google.gson.Gson;
 
 import model.Book;
 
-public class BookServiceApi {
+public class BookApiService {
 	
-	private static List<Book> Books;
-	private static Gson gson = new Gson();
+	private List<Book> Books;
+	private Gson gson = new Gson();
 	
-	public BookServiceApi(){
+	public BookApiService(){
 		
 	}
 	
-	public BookServiceApi(List<Book> Books){
-		BookServiceApi.Books = Books;
+	public BookApiService(List<Book> Books){
+		this.Books = Books;
 	}
 	
 	static{
@@ -32,11 +32,11 @@ public class BookServiceApi {
 		*/
 	}
 	
-	public static List<Book> getAllBooks(){
+	public List<Book> getAllBooks(){
 		return Books;
 	}
 	
-	public static Book getBookById(String id){
+	public Book getBookById(String id){
 		try{
 			return Books.stream().filter( b -> b.getId().equals(id) ).findFirst().get();
 		}
@@ -45,7 +45,7 @@ public class BookServiceApi {
 		}
 	}
 	
-	public static List<Book> getBookByStatus(Boolean status){
+	public List<Book> getBookByStatus(Boolean status){
 		try{
 			return Books.stream().filter( b -> b.getStatus().equals(status) ).collect( Collectors.toList() );
 		}
@@ -54,9 +54,8 @@ public class BookServiceApi {
 		}
 	}
 	
-	public static Book addBook(String bookDetail){
+	public Book addBook(Book book){
 		try{
-			Book book = gson.fromJson(bookDetail, Book.class);
 			book.setId( Integer.toString( Books.size()+1 ) );
 			Books.add(book);
 			return book;
@@ -66,13 +65,12 @@ public class BookServiceApi {
 		}
 	}
 	
-	public static Book updateBookById(String id,String bookDetail){
+	public Book updateBookById(String id,Book bookDetail){
 		try{
-			Book book = gson.fromJson(bookDetail, Book.class);
 			Book upBook = Books.stream().filter( b -> b.getId().equals(id) ).findFirst().get() ;
-			upBook.setTopic( book.getTopic() );
-			upBook.setCategory( book.getCategory() );
-			upBook.setStatus( book.getStatus() );
+			upBook.setTopic( bookDetail.getTopic() );
+			upBook.setCategory( bookDetail.getCategory() );
+			upBook.setStatus( bookDetail.getStatus() );
 			return upBook;
 		}
 		catch(NoSuchElementException ex){
@@ -80,7 +78,7 @@ public class BookServiceApi {
 		}
 	}
 	
-	public static Book updateBookStatusById(String id,Boolean status){
+	public Book updateBookStatusById(String id,Boolean status){
 		try{
 			Book upBook = Books.stream().filter( b -> b.getId().equals(id) ).findFirst().get() ;
 			upBook.setStatus( status );
@@ -91,7 +89,7 @@ public class BookServiceApi {
 		}
 	}
 	
-	public static Boolean deleteBookById(String id){
+	public Boolean deleteBookById(String id){
 		try{
 			Book upBook = Books.stream().filter( b -> b.getId().equals(id) ).findFirst().get() ;
 			Books.remove( upBook ) ;
