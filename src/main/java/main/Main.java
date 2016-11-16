@@ -4,7 +4,6 @@ import static spark.Spark.before;
 import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.options;
-import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.put;
 import static spark.debug.DebugScreen.enableDebugScreen;
@@ -27,6 +26,7 @@ import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import model.Book;
 import model.Message;
+import spark.Spark;
 import utilies.SwaggerParser;
 
 @SwaggerDefinition(
@@ -45,12 +45,21 @@ import utilies.SwaggerParser;
 public class Main {
 
 	public static void main(String[] args) throws JsonProcessingException {
+		Spark.staticFiles.location("webapp/");//Location("/webapp");
+		Spark.
 		port(8083);
+		
 		enableDebugScreen();
+	
 		
 		//new BeforeFilter();
 		//new AfterFilter();
 		before( new CorsFilter() );
+		
+		before( (req,res)->{
+			System.out.println( req.contextPath() );
+			System.out.println( req.pathInfo() );
+		});
 		
 		BookApi();
 		JsonApi();
@@ -60,6 +69,16 @@ public class Main {
 		get("/swagger.json" ,(req, res) -> {
 			return swaggerJson;
 		} );
+		
+		get("/" ,(req, res) -> 
+			"Welcome"
+		);
+		
+		get("/swagger/api" ,(req, res) -> 
+			
+			"aas"
+			//IOUtils.toString(Spark.class.getResourceAsStream("/webapp/api/index.html"))
+		);
 		
 		FinalApi();
 	}
