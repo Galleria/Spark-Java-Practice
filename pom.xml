@@ -112,11 +112,15 @@
 	                        <goal>single</goal>
 	                    </goals>
 	                </execution>
-	                <execution>
-                      <id>org.webjars:swagger-ui</id>
-                    </execution>
 	            </executions>
 	            <configuration>
+	            	<dependencySets>
+	            	<dependencySet>
+				      <excludes>
+				        <exclude>org.webjars:swagger-ui</exclude>
+				      </excludes>
+				    </dependencySet>
+	            	</dependencySets>
 	           	 	<source>1.8</source>
                     <target>1.8</target>
 	                <descriptorRefs>
