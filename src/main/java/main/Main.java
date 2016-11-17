@@ -1,17 +1,14 @@
 package main;
 
-import static spark.Spark.before;
 import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.options;
 import static spark.Spark.post;
 import static spark.Spark.put;
-import static spark.debug.DebugScreen.enableDebugScreen;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 
 import constants.BookApi;
@@ -26,8 +23,6 @@ import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import model.Book;
 import model.Message;
-import spark.Spark;
-import utilies.SwaggerParser;
 
 @SwaggerDefinition(
 	host = "localhost:8083",
@@ -44,7 +39,9 @@ import utilies.SwaggerParser;
 )
 public class Main {
 
-	public static void main(String[] args) throws JsonProcessingException {
+	public static void main(String[] args) throws Exception {
+		
+		/*
 		Spark.staticFiles.location("webapp/");//Location("/webapp");
 		Spark.
 		port(8083);
@@ -81,15 +78,16 @@ public class Main {
 		);
 		
 		FinalApi();
+		*/
 	}
 	
 	private static void BookApi(){
 		
 		List<Book> exampleBook = initialBooks();
 		
-		BookController bookController = new BookController( exampleBook );
+		BookController bookController = new BookController() ;
 		//get( BookApi.GET_ALL_BOOKS.getPath() , ( req, res ) -> Test2.getAllBooks ( req, res ) , new Gson()::toJson );
-		
+
 		get( BookApi.GET_ALL_BOOKS.getPath() , bookController.getAllBooks , new Gson()::toJson );
 		get( BookApi.GET_BOOK_BY_ID.getPath() , bookController.getBookById , new Gson()::toJson );
 		get( BookApi.GET_BOOK_BY_STATUS.getPath() , bookController.getBookByStatus , new Gson()::toJson );

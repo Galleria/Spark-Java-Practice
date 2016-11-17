@@ -20,8 +20,8 @@ public class BookController {
 		bookApiService = new BookApiService();
 	}
 	
-	public BookController(List<Book> books){
-		bookApiService = new BookApiService(books);
+	public BookController(BookApiService bookApiService){
+		this.bookApiService = bookApiService;
 	}
 
 	public Route getAllBooks = (Request req,Response res) -> {
