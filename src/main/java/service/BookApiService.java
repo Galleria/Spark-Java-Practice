@@ -1,4 +1,5 @@
 package service;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -10,10 +11,9 @@ import model.Book;
 public class BookApiService {
 	
 	private List<Book> Books;
-	private Gson gson = new Gson();
 	
 	public BookApiService(){
-		
+		this.Books = new ArrayList<>();
 	}
 	
 	public BookApiService(List<Book> Books){
